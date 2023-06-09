@@ -7,25 +7,14 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
-        container: 
-            image: eeems/remarkable-toolchain:latest
-            volumes:
-                - ./:/linux:Z
         steps:
             - name: checkout
               uses: actions/checkout@v3
-            - name: compile module
-              run: |
-                    cd /linux
-                    source /opt/codex/rm11x/3.1.15/environment-setup-cortexa7hf-neon-remarkable-linux-gnueabi
-                    make mrproper
-                    touch .scmversion
-                    cp arch/arm/configs/zero-sugar_defconfig .config
-                    make olddefconfig
-                    make drivers/misc/rm-pogo/pogo.ko
-                    make modules_prepare 
+            - name: build dockerfile
+              run: docker build -t builder .
+            - name: compile
+              run: docker run --rm --volume ${GITHUB_WORKSPACE}/:/linux:Z builder
             - name: release
               uses: softprops/action-gh-release@v1
               with:
-                files: drivers/misc/rm-pogo/pogo.ko
-
+                  files: ${GITHUB_WORKSPACE}/driver/misc/rm-pogo/pogo.ko
