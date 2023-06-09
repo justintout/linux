@@ -17,6 +17,6 @@ jobs:
             - name: release
               uses: ncipollo/release-action@v1
               with:
-                  artifacts: ${GITHUB_WORKSPACE}/driver/misc/rm-pogo/pogo.ko
+                  artifacts: /driver/misc/rm-pogo/pogo.ko
                   commit: cap-to-patch
                   tag: patch
