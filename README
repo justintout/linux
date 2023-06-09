@@ -1,3 +1,19 @@
+This patch rempas <kbd>Caps Lock</kbd> to <kbd>>ESC</kbd> for the "English - US" version of the reMarkable Type Folio (RM710).
+
+Thank you [@eeems](https://github.com/Eeems) and [@mkborregaard](https://github.com/mkborregaard) for prior art. 
+
+More info on the [reMarkable Discord](https://discord.com/channels/385916768696139794/1103695151026679919/1105847536176082995).
+
+## Checking keyboard layout
+
+There are 4 layouts defined in the pogo driver. 
+I used the output of `cat /sys/pogo/status/keylayout_ver` while the keyboard was attached. 
+You must check this with the keyboard attached and recognized, else it will incorrectly return `0`. 
+
+This number maps to the index [here](https://github.com/justintout/linux/blob/1328c1f10cb4b68b6ee0b35be9dc4975424d2827/drivers/misc/rm-pogo/pogo_kpad.c#L468). 
+Edit whichever `.keymap` is defined for your index. 
+
+
 Linux kernel
 ============
 
